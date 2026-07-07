@@ -201,13 +201,15 @@
     border-radius: 50%;
     padding: 4px;
     background: conic-gradient(from 0deg, var(--blue), var(--green), var(--blue));
-    animation: spin 6s linear infinite;
+    animation: wiggle 5s ease-in-out infinite;
     position: relative;
     box-shadow: 0 0 30px rgba(62,230,168,0.2);
   }
-  @keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+  @keyframes wiggle {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    25% { transform: translateY(-8px) rotate(-3deg); }
+    50% { transform: translateY(0) rotate(0deg); }
+    75% { transform: translateY(-8px) rotate(3deg); }
   }
   .photo-inner {
     width: 100%;
@@ -293,6 +295,7 @@
     color: var(--text-body);
     font-family: 'Cormorant Garamond', serif;
     transition: all .25s;
+    cursor: pointer;
   }
   .skill-pill:hover {
     border-color: var(--blue);
@@ -354,6 +357,47 @@
   .contact-box h2 { font-family: 'Playfair Display', serif; font-size: 34px; color: var(--white); }
   .contact-box p { color: var(--text-dim); margin-top: 12px; }
   .contact-links { margin-top: 30px; display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+.contact-form select {
+  background: var(--bg-card);
+  border: 1px solid var(--hair);
+  color: var(--text-body);
+  padding: 14px 16px;
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 16px;
+  border-radius: 2px;
+}
+.contact-form select:focus {
+  outline: none;
+  border-color: var(--green);
+  box-shadow: 0 0 12px rgba(62,230,168,0.2);
+}
+.contact-form {
+  max-width: 480px;
+  margin: 30px auto 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.contact-form input,
+.contact-form textarea {
+  background: var(--bg-card);
+  border: 1px solid var(--hair);
+  color: var(--text-body);
+  padding: 14px 16px;
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 16px;
+  border-radius: 2px;
+}
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border-color: var(--green);
+  box-shadow: 0 0 12px rgba(62,230,168,0.2);
+}
+.contact-form button {
+  margin-top: 6px;
+  align-self: center;
+}
 
   footer { text-align: center; padding: 34px 0; font-size: 13px; color: #4a6066; border-top: 1px solid var(--hair); position: relative; z-index: 2;}
 
@@ -443,10 +487,10 @@
         <div class="photo-frame">
           <div class="photo-inner">
             <!-- Paste your photo link inside src="" below -->
-            <img src="PASTE_YOUR_PHOTO_LINK_HERE" alt="Profile photo">
+            <img src="https://i.ibb.co/F4RhBN1n/Untitled-design-10-removebg-preview.png" alt="Profile photo">
           </div>
         </div>
-        <div class="photo-caption">Portfolio</div>
+        <div class="photo-caption">Jotham Jusay</div>
       </div>
     </div>
   </div>
@@ -470,10 +514,10 @@
         </p>
       </div>
       <div class="stat-row reveal">
-        <div class="stat"><div class="num">3+</div><div class="label">Live Business Systems</div></div>
+        <div class="stat"><div class="num">14+</div><div class="label">Live Business Systems</div></div>
         <div class="stat"><div class="num">100%</div><div class="label">Self-Taught</div></div>
         <div class="stat"><div class="num">2023</div><div class="label">Building Since</div></div>
-        <div class="stat"><div class="num">₱0</div><div class="label">Hosting Cost (GitHub Pages)</div></div>
+        <div class="stat"><div class="num">24/7</div><div class="label">Systems Running Live</div></div>
       </div>
     </div>
   </div>
@@ -487,15 +531,17 @@
       <div class="divider"></div>
     </div>
     <div class="skills-row reveal">
-      <div class="skill-pill">HTML / CSS / JavaScript</div>
-      <div class="skill-pill">Google Apps Script</div>
-      <div class="skill-pill">Google Sheets as Database</div>
-      <div class="skill-pill">GCash Payment Integration</div>
-      <div class="skill-pill">Supabase</div>
-      <div class="skill-pill">GitHub Pages Deployment</div>
-      <div class="skill-pill">Telegram Bot Notifications</div>
-      <div class="skill-pill">Live GPS / Rider Tracking</div>
-      <div class="skill-pill">Responsive UI Design</div>
+      <div class="skill-pill" onclick="openSkillModal('html')">HTML / CSS / JavaScript</div>
+      <div class="skill-pill" onclick="openSkillModal('apps-script')">Google Apps Script</div>
+      <div class="skill-pill" onclick="openSkillModal('supabase')">Supabase (Database & Backend)</div>
+      <div class="skill-pill" onclick="openSkillModal('payments')">Payment Integration (PayMongo/Xendit)</div>
+      <div class="skill-pill" onclick="openSkillModal('sheets')">Google Sheets Integration / Automation</div>
+      <div class="skill-pill" onclick="openSkillModal('deployment')">Pages Deployment (Porkbun/Hostinger/GitHub/WordPress)</div>
+      <div class="skill-pill" onclick="openSkillModal('restapi')">REST API Integration</div>
+      <div class="skill-pill" onclick="openSkillModal('telegram')">Telegram Bot API</div>
+      <div class="skill-pill" onclick="openSkillModal('pwa')">Progressive Web Apps (PWA) Development</div>
+      <div class="skill-pill" onclick="openSkillModal('gps')">Live GPS / Tracking (Google Maps API)</div>
+      <div class="skill-pill" onclick="openSkillModal('responsive')">Responsive UI Design</div>
     </div>
   </div>
 </section>
@@ -513,29 +559,29 @@
 
       <div class="project-card" onclick="openModal('unclebrew')">
         <div class="project-tag">Business System</div>
-        <h3>Uncle Brew Ordering Platform</h3>
+        <h3>Ordering Platform</h3>
         <div class="desc">Full ordering widget with GCash/COD checkout, live rider tracking, and Telegram alerts.</div>
         <div class="view-more">View Case Study →</div>
       </div>
 
       <div class="project-card" onclick="openModal('sipandpearl')">
         <div class="project-tag">Business System</div>
-        <h3>Sip &amp; Pearl Order &amp; Backend</h3>
+        <h3>Product &amp; Customization Order &amp; Backend</h3>
         <div class="desc">Complete ordering system backed by a 7-tab Google Sheets workbook and Apps Script API.</div>
         <div class="view-more">View Case Study →</div>
       </div>
 
       <div class="project-card" onclick="openModal('pnvhs')">
         <div class="project-tag">Institutional Site</div>
-        <h3>PNVHS School Website</h3>
-        <div class="desc">Animated hero with day/night cycle, SVG school building, and responsive carousel.</div>
+        <h3>Tourist Destination Guide Portal</h3>
+        <div class="desc">Informative site with attraction directories, local highlights, and an animated hero showcasing the destination.</div>
         <div class="view-more">View Case Study →</div>
       </div>
 
       <div class="project-card" onclick="openModal('migration')">
         <div class="project-tag">Infrastructure</div>
-        <h3>Strikingly → GitHub Pages Migration</h3>
-        <div class="desc">Rebuilt and migrated a paid site to free, self-hosted infrastructure with zero feature loss.</div>
+        <h3>Order-to-Sheet Automation Pipeline</h3>
+        <div class="desc"> Connected form submissions directly to Google Sheets with auto-formatting, removing manual data entry entirely.</div>
         <div class="view-more">View Case Study →</div>
       </div>
 
@@ -575,16 +621,34 @@
     <div class="contact-box reveal">
       <h2>Let's build something.</h2>
       <p>Open to freelance projects, business tooling, and web development work.</p>
-      <div class="contact-links">
-        <!-- The single main link -->
-        <a href="https://github.com/tmenshs" target="_blank" rel="noopener" class="btn solid">View on GitHub</a>
-      </div>
+
+      <form action="https://api.web3forms.com/submit" method="POST" class="contact-form">
+        <input type="hidden" name="access_key" value="5c49414e-589b-433c-bbab-42204c774532">
+        <input type="hidden" name="subject" value="New message from Portfolio site">
+
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="email" name="email" placeholder="Your Email" required>
+
+        <select name="preferred_contact" required>
+          <option value="" disabled selected>Preferred Contact Method</option>
+          <option value="Email">Email</option>
+          <option value="Messenger">Messenger</option>
+          <option value="Telegram">Telegram</option>
+          <option value="WhatsApp">WhatsApp</option>
+        </select>
+
+        <input type="text" name="contact_details" placeholder="Your Messenger/Telegram/WhatsApp username or number">
+
+        <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+
+        <button type="submit" class="btn solid">Send Message</button>
+      </form>
     </div>
   </div>
 </section>
 
 <footer>
-  © 2026 Portfolio. Built and hosted on GitHub Pages.
+  © 2026 Jotham Jusay. All rights reserved.
 </footer>
 
 <div class="overlay" id="overlay" onclick="closeIfOverlay(event)">
@@ -594,36 +658,62 @@
 <script>
 const projects = {
   unclebrew: {
-    title: "Uncle Brew Ordering Platform",
+    title: "Ordering Platform",
     issuer: "Uncle Brew / Quix Brew",
-    problem: "A milk tea business needed online ordering without paying for expensive e-commerce platforms, plus a way to track deliveries and pay riders in real time.",
-    build: "Built a multi-panel ordering widget covering product browsing, cart, GCash and Cash-on-Delivery checkout, live order tracking, and a rider dashboard — all connected to a Google Apps Script backend using Google Sheets as the database. Added Telegram notifications for new orders, browser-based GPS pinning for customer location, and live rider location sharing.",
+    problem: "A Typical business needed online ordering without paying for expensive e-commerce platforms, plus a way to track deliveries and pay riders in real time.",
+    build: "Built a multi-panel ordering widget covering product browsing, cart, GCash and Cash-on-Delivery checkout, live order tracking, and a rider dashboard — all connected to a Google Apps Script / Supabase backend. Added Telegram notifications for new orders, browser-based GPS pinning for customer location, and live rider location sharing.",
     tech: ["HTML/CSS/JS", "Google Apps Script", "Google Sheets", "Telegram Bot API", "Geolocation API", "GitHub Pages"]
   },
   sipandpearl: {
-    title: "Sip & Pearl Order & Backend System",
+    title: "Product &amp; Customization Order &amp; Backend",
     issuer: "Sip & Pearl",
-    problem: "A beverage business needed a structured, zero-cost backend to manage orders, inventory, and payments without a dedicated database server.",
-    build: "Designed a seven-tab Google Sheets workbook as the full data backend, paired with a deployable Code.gs Apps Script API to handle order submission, verification, and status updates from the front-end ordering interface.",
-    tech: ["Google Apps Script", "Google Sheets", "JavaScript", "REST-style API design"]
+    problem: "A beverage business needed a structured, Moderate-cost backend to manage orders, inventory, and payments without a dedicated database server.",
+    build: "Google Sheets (seven-tab designated workbook) integrated with supabase as a full data backend, paired with a deployable web app to handle order submission, verification, and status updates from the front-end ordering interface.",
+    tech: ["Google Apps Script", "Google Sheets", "Supabase", "HTML/CSS/JS", "REST-style API design"]
   },
   pnvhs: {
-    title: "PNVHS School Website",
-    issuer: "Pintuyan National Vocational High School",
-    problem: "The school needed a modern, engaging website to represent its identity online, built on a limited budget.",
-    build: "Built an animated hero section featuring a day/night sky cycle, a custom SVG rendering of the school building with a waving flag animation, and a responsive card carousel for showcasing school programs and news.",
+    title: "Tourist Destination Guide Portal",
+    issuer: "Local Tourist Information Center",
+    problem: "The destination needed a modern, user-friendly portal to provide information about attractions, local highlights, and appointment scheduling.",
+    build: "Built an informative website with attraction directories, local highlights, and an animated hero section showcasing the destination.",
     tech: ["HTML/CSS", "SVG Animation", "JavaScript", "Responsive Design"]
   },
   migration: {
-    title: "Strikingly → GitHub Pages Migration",
-    issuer: "Uncle Brew / Quix Brew",
-    problem: "The business was paying recurring fees for Strikingly hosting, which was cost-prohibitive long-term for a small business.",
-    build: "Rebuilt the site independently as static HTML/CSS/JS and migrated hosting to GitHub Pages at zero cost, while preserving the existing Google Apps Script ordering backend so no functionality was lost in the switch.",
-    tech: ["HTML/CSS/JS", "GitHub Pages", "Google Apps Script"]
+    title: "Order-to-Sheet Automation Pipeline",
+    issuer: "Internal Tooling",
+    problem: "Orders were being manually copied from forms into spreadsheets, causing delays and frequent data entry errors.",
+    build: "Built an automated pipeline using Google Apps Script triggers to capture form submissions, validate the data, auto-format rows, and instantly sync them into the live Google Sheets backend — eliminating manual entry.",
+    tech: ["Google Apps Script", "Google Sheets", "Google Forms", "Trigger-based Automation"]
   }
 };
 
 function openModal(key) {
+  const skills = {
+  html: { title: "HTML / CSS / JavaScript", desc: "Core front-end languages used to build every interface — responsive layouts, animations, and interactive components from scratch." },
+  "apps-script": { title: "Google Apps Script", desc: "Used to build serverless backends that connect Google Sheets, Forms, and Gmail into working business logic without needing paid hosting." },
+  supabase: { title: "Supabase (Database & Backend)", desc: "A Postgres-based backend-as-a-service used for structured data storage, authentication, and real-time syncing in larger systems." },
+  payments: { title: "Payment Integration (PayMongo/Xendit)", desc: "Integrated GCash, card, and e-wallet payment flows directly into ordering systems using PayMongo and Xendit APIs." },
+  sheets: { title: "Google Sheets Integration / Automation", desc: "Used Sheets as a lightweight database with Apps Script automation for order tracking, inventory, and reporting." },
+  deployment: { title: "Pages Deployment (Porkbun/Hostinger/GitHub/WordPress)", desc: "Deployed and managed live sites across multiple platforms depending on client needs — from free GitHub Pages hosting to custom domains." },
+  restapi: { title: "REST API Integration", desc: "Connected front-end interfaces to backend services and third-party APIs using clean, structured REST endpoints." },
+  telegram: { title: "Telegram Bot API", desc: "Built real-time notification systems that alert business owners instantly when new orders or events occur." },
+  pwa: { title: "Progressive Web Apps (PWA) Development", desc: "Built installable, app-like web experiences that work offline and load fast, without needing an app store." },
+  gps: { title: "Live GPS / Tracking (Google Maps API)", desc: "Implemented real-time location tracking for delivery riders and customer pinning using the Google Maps API." },
+  responsive: { title: "Responsive UI Design", desc: "Designed interfaces that adapt cleanly across mobile, tablet, and desktop — no broken layouts, ever." }
+};
+
+function openSkillModal(key) {
+  const s = skills[key];
+  document.getElementById('modal-content').innerHTML = `
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <span class="verify-badge">✓ Skill</span>
+    <h3>${s.title}</h3>
+    <div class="modal-section">
+      <p>${s.desc}</p>
+    </div>
+  `;
+  document.getElementById('overlay').classList.add('open');
+}
   const p = projects[key];
   document.getElementById('modal-content').innerHTML = `
     <button class="modal-close" onclick="closeModal()">&times;</button>
