@@ -93,6 +93,7 @@
     align-items: center;
     padding-top: 18px;
     padding-bottom: 18px;
+    gap: 12px;
   }
   .brand {
     font-family: 'Cinzel', serif;
@@ -103,6 +104,33 @@
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    flex-shrink: 0;
+  }
+  .nav-field {
+    position: relative;
+    width: 140px;
+    height: 24px;
+    overflow: hidden;
+    margin-left: 20px;
+  }
+  .nav-ball {
+    position: absolute;
+    bottom: 2px;
+    left: -20px;
+    font-size: 16px;
+    animation: navRunToGoal 4s linear infinite;
+  }
+  .nav-goal {
+    position: absolute;
+    right: 6px;
+    bottom: -2px;
+    font-size: 18px;
+  }
+  @keyframes navRunToGoal {
+    0% { left: -20px; transform: rotate(0deg); }
+    85% { left: 85%; transform: rotate(720deg); }
+    90% { left: 85%; transform: rotate(720deg) scale(1.2); }
+    100% { left: 85%; transform: rotate(720deg) scale(1); opacity: 0; }
   }
   .navlinks {
     display: flex;
@@ -111,6 +139,7 @@
     font-size: 12px;
     letter-spacing: 2px;
     text-transform: uppercase;
+    flex-shrink: 0;
   }
   .navlinks a {
     color: var(--text-dim);
@@ -118,6 +147,31 @@
     transition: color .2s;
   }
   .navlinks a:hover { color: var(--green); }
+
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 32px;
+    height: 32px;
+    background: none;
+    border: 1px solid var(--dash);
+    cursor: pointer;
+    flex-shrink: 0;
+    padding: 0;
+  }
+  .nav-toggle span {
+    display: block;
+    width: 16px;
+    height: 1px;
+    background: var(--green);
+    transition: transform .25s, opacity .25s;
+  }
+  .nav-toggle.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .nav-toggle.open span:nth-child(2) { opacity: 0; }
+  .nav-toggle.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 
   header.hero {
     padding: 90px 0 90px 0;
@@ -130,7 +184,7 @@
     align-items: flex-start;
     gap: 40px;
   }
-  .hero-left { flex: 1; }
+  .hero-left { flex: 1; min-width: 0; }
   .hero-right {
     display: flex;
     flex-direction: column;
@@ -169,6 +223,7 @@
     margin-top: 34px;
     display: flex;
     gap: 18px;
+    flex-wrap: wrap;
   }
   .btn {
     font-family: 'Cinzel', serif;
@@ -184,6 +239,8 @@
     cursor: pointer;
     position: relative;
     overflow: hidden;
+    display: inline-block;
+    text-align: center;
   }
   .btn.solid {
     background: linear-gradient(90deg, var(--blue-dim), var(--green-dim));
@@ -234,11 +291,6 @@
     text-transform: uppercase;
   }
 
-  @media (max-width: 720px) {
-    .hero-top-row { flex-direction: column-reverse; align-items: center; text-align: center; }
-    .hero-cta { justify-content: center; }
-  }
-
   section { padding: 90px 0; position: relative; z-index: 2;}
   section.alt { background: var(--bg-raised); }
   .section-head { text-align: center; margin-bottom: 54px; }
@@ -263,7 +315,6 @@
   }
 
   .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
-  @media (max-width: 720px) { .about-grid { grid-template-columns: 1fr; } }
   .about-grid p { font-size: 18px; margin-bottom: 16px; }
   .stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
   .stat {
@@ -304,7 +355,6 @@
   }
 
   .project-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 26px; }
-  @media (max-width: 720px) { .project-grid { grid-template-columns: 1fr; } }
 
   .project-card {
     background: var(--bg-card);
@@ -340,7 +390,6 @@
   }
 
   .cert-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
-  @media (max-width: 720px) { .cert-grid { grid-template-columns: 1fr; } }
   .cert-card { background: var(--bg-card); border: 1px solid var(--hair); padding: 30px 26px; }
   .cert-card.slot { border: 1px dashed var(--dash); background: transparent; }
   .status-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
@@ -357,49 +406,74 @@
   .contact-box h2 { font-family: 'Playfair Display', serif; font-size: 34px; color: var(--white); }
   .contact-box p { color: var(--text-dim); margin-top: 12px; }
   .contact-links { margin-top: 30px; display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
-.contact-form select {
-  background: var(--bg-card);
-  border: 1px solid var(--hair);
-  color: var(--text-body);
-  padding: 14px 16px;
-  font-family: 'EB Garamond', Georgia, serif;
-  font-size: 16px;
-  border-radius: 2px;
-}
-.contact-form select:focus {
-  outline: none;
-  border-color: var(--green);
-  box-shadow: 0 0 12px rgba(62,230,168,0.2);
-}
-.contact-form {
-  max-width: 480px;
-  margin: 30px auto 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-.contact-form input,
-.contact-form textarea {
-  background: var(--bg-card);
-  border: 1px solid var(--hair);
-  color: var(--text-body);
-  padding: 14px 16px;
-  font-family: 'EB Garamond', Georgia, serif;
-  font-size: 16px;
-  border-radius: 2px;
-}
-.contact-form input:focus,
-.contact-form textarea:focus {
-  outline: none;
-  border-color: var(--green);
-  box-shadow: 0 0 12px rgba(62,230,168,0.2);
-}
-.contact-form button {
-  margin-top: 6px;
-  align-self: center;
-}
+  .contact-form select {
+    background: var(--bg-card);
+    border: 1px solid var(--hair);
+    color: var(--text-body);
+    padding: 14px 16px;
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: 16px;
+    border-radius: 2px;
+    width: 100%;
+  }
+  .contact-form select:focus {
+    outline: none;
+    border-color: var(--green);
+    box-shadow: 0 0 12px rgba(62,230,168,0.2);
+  }
+  .contact-form {
+    max-width: 480px;
+    margin: 30px auto 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .contact-form input,
+  .contact-form textarea {
+    background: var(--bg-card);
+    border: 1px solid var(--hair);
+    color: var(--text-body);
+    padding: 14px 16px;
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: 16px;
+    border-radius: 2px;
+    width: 100%;
+  }
+  .contact-form input:focus,
+  .contact-form textarea:focus {
+    outline: none;
+    border-color: var(--green);
+    box-shadow: 0 0 12px rgba(62,230,168,0.2);
+  }
+  .contact-form button {
+    margin-top: 6px;
+    align-self: center;
+    width: 100%;
+  }
 
   footer { text-align: center; padding: 34px 0; font-size: 13px; color: #4a6066; border-top: 1px solid var(--hair); position: relative; z-index: 2;}
+  .footer-brand {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, var(--blue), var(--green), var(--blue));
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: shimmer 6s linear infinite;
+  }
+  @keyframes shimmer {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+  }
+  .footer-sub {
+    margin-top: 10px;
+    font-size: 13px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+  }
 
   .overlay {
     display: none;
@@ -419,6 +493,7 @@
     width: 100%;
     max-height: 85vh;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     padding: 42px 38px;
     position: relative;
     box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 40px rgba(62,230,168,0.08);
@@ -432,6 +507,8 @@
     position: absolute; top: 18px; right: 22px;
     background: none; border: none; color: var(--text-dim);
     font-size: 22px; cursor: pointer; line-height: 1;
+    width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center;
   }
   .modal-close:hover { color: var(--green); }
   .verify-badge {
@@ -448,6 +525,80 @@
   .modal-section p { font-size: 16px; color: var(--text-body); }
   .tech-pills { display: flex; flex-wrap: wrap; gap: 8px; }
   .tech-pill { font-size: 13px; border: 1px solid var(--dash); padding: 5px 12px; color: var(--text-dim); }
+
+  /* ============ MOBILE OPTIMIZATION ============ */
+  @media (max-width: 720px) {
+    .hero-top-row { flex-direction: column-reverse; align-items: center; text-align: center; }
+    .hero-cta { justify-content: center; }
+    .about-grid { grid-template-columns: 1fr; }
+    .project-grid { grid-template-columns: 1fr; }
+    .cert-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 600px) {
+    .container { padding: 0 20px; }
+
+    /* Nav becomes a slide-down mobile menu */
+    .nav-field { display: none; }
+    .nav-toggle { display: flex; }
+    .navlinks {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      gap: 0;
+      background: var(--bg-raised);
+      border-bottom: 1px solid var(--hair);
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .3s ease;
+    }
+    .navlinks.open { max-height: 260px; }
+    .navlinks a {
+      padding: 16px 20px;
+      border-top: 1px solid var(--hair);
+      width: 100%;
+    }
+
+    header.hero { padding: 56px 0 56px 0; }
+    .role { font-size: 34px; margin-top: 14px; }
+    .tagline { font-size: 17px; margin-top: 16px; }
+    .hero-cta { margin-top: 26px; gap: 14px; width: 100%; }
+    .hero-cta .btn { flex: 1; text-align: center; padding: 14px 18px; }
+    .photo-frame { width: 110px; height: 110px; }
+
+    section { padding: 56px 0; }
+    .section-head { margin-bottom: 36px; }
+    .section-head h2 { font-size: 28px; }
+    .section-head p { font-size: 16px; }
+
+    .about-grid { gap: 34px; }
+    .about-grid p { font-size: 16px; }
+    .stat-row { gap: 14px; }
+    .stat { padding: 16px 10px; }
+    .stat .num { font-size: 26px; }
+    .stat .label { font-size: 10px; letter-spacing: 1px; }
+
+    .skill-pill { font-size: 14px; padding: 9px 16px; }
+
+    .project-card { padding: 26px 22px; }
+    .project-card h3 { font-size: 21px; }
+
+    .cert-card { padding: 24px 20px; }
+
+    .contact-box { padding: 40px 22px; }
+    .contact-box h2 { font-size: 27px; }
+
+    .modal { padding: 30px 22px; max-height: 90vh; }
+    .modal h3 { font-size: 24px; }
+  }
+
+  @media (max-width: 380px) {
+    .role { font-size: 28px; }
+    .brand { font-size: 11px; letter-spacing: 3px; }
+    .section-head h2 { font-size: 24px; }
+  }
 </style>
 </head>
 <body>
@@ -458,12 +609,19 @@
 <nav>
   <div class="container">
     <div class="brand">Portfolio</div>
-    <div class="navlinks">
+    <div class="nav-field">
+      <span class="nav-ball">⚽</span>
+      <span class="nav-goal">🥅</span>
+    </div>
+    <div class="navlinks" id="navlinks">
       <a href="#about">About</a>
       <a href="#work">Work</a>
       <a href="#certifications">Certifications</a>
       <a href="#contact">Contact</a>
     </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
 
@@ -626,7 +784,7 @@
         <input type="hidden" name="access_key" value="5c49414e-589b-433c-bbab-42204c774532">
         <input type="hidden" name="subject" value="New message from Portfolio site">
 
-        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="text" name="name" placeholder="Full Name" required>
         <input type="email" name="email" placeholder="Your Email" required>
 
         <select name="preferred_contact" required>
@@ -637,7 +795,7 @@
           <option value="WhatsApp">WhatsApp</option>
         </select>
 
-        <input type="text" name="contact_details" placeholder="Your Messenger/Telegram/WhatsApp username or number">
+        <input type="text" name="contact_details" placeholder="Contact Details (e.g., Telegram username, Messenger link, WhatsApp number)" required>
 
         <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
 
@@ -648,7 +806,8 @@
 </section>
 
 <footer>
-  © 2026 Jotham Jusay. All rights reserved.
+  <div class="footer-brand">Portfolio</div>
+  <div class="footer-sub">© 2026 Jotham Jusay. All rights reserved.</div>
 </footer>
 
 <div class="overlay" id="overlay" onclick="closeIfOverlay(event)">
@@ -660,15 +819,15 @@ const projects = {
   unclebrew: {
     title: "Ordering Platform",
     issuer: "Uncle Brew / Quix Brew",
-    problem: "A Typical business needed online ordering without paying for expensive e-commerce platforms, plus a way to track deliveries and pay riders in real time.",
+    problem: "A typical business needed online ordering without paying for expensive e-commerce platforms, plus a way to track deliveries and pay riders in real time.",
     build: "Built a multi-panel ordering widget covering product browsing, cart, GCash and Cash-on-Delivery checkout, live order tracking, and a rider dashboard — all connected to a Google Apps Script / Supabase backend. Added Telegram notifications for new orders, browser-based GPS pinning for customer location, and live rider location sharing.",
     tech: ["HTML/CSS/JS", "Google Apps Script", "Google Sheets", "Telegram Bot API", "Geolocation API", "GitHub Pages"]
   },
   sipandpearl: {
-    title: "Product &amp; Customization Order &amp; Backend",
+    title: "Product & Customization Order & Backend",
     issuer: "Sip & Pearl",
-    problem: "A beverage business needed a structured, Moderate-cost backend to manage orders, inventory, and payments without a dedicated database server.",
-    build: "Google Sheets (seven-tab designated workbook) integrated with supabase as a full data backend, paired with a deployable web app to handle order submission, verification, and status updates from the front-end ordering interface.",
+    problem: "A beverage business needed a structured, moderate-cost backend to manage orders, inventory, and payments without a dedicated database server.",
+    build: "Built on a seven-tab Google Sheets workbook integrated with Supabase as a full data backend, paired with a deployable web app to handle order submission, verification, and status updates from the front-end ordering interface.",
     tech: ["Google Apps Script", "Google Sheets", "Supabase", "HTML/CSS/JS", "REST-style API design"]
   },
   pnvhs: {
@@ -687,8 +846,7 @@ const projects = {
   }
 };
 
-function openModal(key) {
-  const skills = {
+const skills = {
   html: { title: "HTML / CSS / JavaScript", desc: "Core front-end languages used to build every interface — responsive layouts, animations, and interactive components from scratch." },
   "apps-script": { title: "Google Apps Script", desc: "Used to build serverless backends that connect Google Sheets, Forms, and Gmail into working business logic without needing paid hosting." },
   supabase: { title: "Supabase (Database & Backend)", desc: "A Postgres-based backend-as-a-service used for structured data storage, authentication, and real-time syncing in larger systems." },
@@ -714,6 +872,8 @@ function openSkillModal(key) {
   `;
   document.getElementById('overlay').classList.add('open');
 }
+
+function openModal(key) {
   const p = projects[key];
   document.getElementById('modal-content').innerHTML = `
     <button class="modal-close" onclick="closeModal()">&times;</button>
@@ -737,9 +897,23 @@ function openSkillModal(key) {
   `;
   document.getElementById('overlay').classList.add('open');
 }
+
 function closeModal() { document.getElementById('overlay').classList.remove('open'); }
 function closeIfOverlay(e) { if (e.target.id === 'overlay') closeModal(); }
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+const navToggle = document.getElementById('navToggle');
+const navlinks = document.getElementById('navlinks');
+navToggle.addEventListener('click', () => {
+  const isOpen = navlinks.classList.toggle('open');
+  navToggle.classList.toggle('open', isOpen);
+  navToggle.setAttribute('aria-expanded', isOpen);
+});
+navlinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  navlinks.classList.remove('open');
+  navToggle.classList.remove('open');
+  navToggle.setAttribute('aria-expanded', false);
+}));
 
 const revealEls = document.querySelectorAll('.reveal');
 const io = new IntersectionObserver((entries) => {
